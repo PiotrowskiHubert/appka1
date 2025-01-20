@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/image1">
+
+        <TextView
+            android:id="@+id/welcomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Witaj we WroCinema!"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:id="@+id/btnRepertuar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zobacz Repertuar"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btnUpcomingMovies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Najbliższe Premiery"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnMyReservations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Moje Rezerwacje"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnAbout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="O nas"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/btnPromotions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Promocje"
+            android:layout_marginTop="8dp" />
+
+</LinearLayout>
