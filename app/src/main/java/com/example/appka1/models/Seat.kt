@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class Seat(
     val id: Long,
     val seatNumber: Int,
-    val available: Boolean
+    var available: Boolean
 )

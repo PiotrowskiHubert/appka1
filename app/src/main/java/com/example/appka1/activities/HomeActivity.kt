@@ -13,7 +13,7 @@ class HomeActivity : AppCompatActivity() {
 
         val repertuarButton: Button = findViewById(R.id.btnRepertuar)
         repertuarButton.setOnClickListener {
-            startActivity(Intent(this, MoviesActivity::class.java))
+            startActivity(Intent(this, ShowingsActivity::class.java))
         }
 
         val upcomingMoviesButton: Button = findViewById(R.id.btnUpcomingMovies)

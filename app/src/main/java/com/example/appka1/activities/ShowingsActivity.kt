@@ -1,6 +1,5 @@
 package com.example.appka1.activities
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MoviesActivity : AppCompatActivity() {
+class ShowingsActivity : AppCompatActivity() {
 
     private lateinit var showingsList: List<Showing>
 
@@ -37,7 +36,7 @@ class MoviesActivity : AppCompatActivity() {
                     val groupedShowings = showingsList.groupBy { it.movie.title }
 
                     // Ustawienie adaptera RecyclerView
-                    val adapter = MoviesAdapter(this@MoviesActivity, groupedShowings)
+                    val adapter = ShowingsAdapter(this@ShowingsActivity, groupedShowings)
                     moviesRecyclerView.adapter = adapter
                 } else {
                     Log.e("MoviesActivity", "Brak dostępnych seansów.")

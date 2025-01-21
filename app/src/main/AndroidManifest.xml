@@ -34,7 +34,7 @@
 
         <activity android:name=".activities.HomeActivity" />
 
-        <activity android:name=".activities.MoviesActivity" />
+        <activity android:name=".activities.ShowingsActivity" />
         <activity android:name=".activities.SeatsActivity" />
         <activity android:name=".activities.UpcomingMoviesActivity"/>
         <activity android:name=".activities.MyReservationActivity"/>

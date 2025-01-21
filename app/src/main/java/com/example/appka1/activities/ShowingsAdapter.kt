@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.appka1.R
 import com.example.appka1.models.Showing
 
-class MoviesAdapter(
+class ShowingsAdapter(
     private val context: Context,
     private val groupedShowings: Map<String, List<Showing>>
-) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
+) : RecyclerView.Adapter<ShowingsAdapter.MovieViewHolder>() {
 
     // Widok dla każdego elementu
     inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {

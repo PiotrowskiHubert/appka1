@@ -8,9 +8,11 @@ data class Showing(
     val movie: Movie,
     val screeningRoom: ScreeningRoom,
     val startTime: String,
-    val seats: List<Seat>
+    val seats: MutableList<Seat>
 ) {
     override fun toString(): String {
         return "${movie.title} - ${startTime} - ${screeningRoom.name}"
     }
+
+
 }

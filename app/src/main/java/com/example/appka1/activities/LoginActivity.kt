@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 sealed interface LoginResultsUiState {
-    data class Success(val apiTestResult: User) : LoginResultsUiState
+    data class Success(val apiLoginResult: User) : LoginResultsUiState
     object Error : LoginResultsUiState
     object Loading : LoginResultsUiState
 }
