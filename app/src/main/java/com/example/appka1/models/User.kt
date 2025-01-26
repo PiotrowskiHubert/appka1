@@ -9,5 +9,6 @@ data class User(
     val firstName: String,
     val lastName: String,
     val password: String,
-    val status: Int
+    val status: Int,
+    val seats: MutableList<Seat> = mutableListOf()
 )

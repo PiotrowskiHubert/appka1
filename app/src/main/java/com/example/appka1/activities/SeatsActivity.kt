@@ -1,7 +1,8 @@
 package com.example.appka1.activities
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.Toast
@@ -10,7 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.appka1.R
 import com.example.appka1.models.Seat
 import com.example.appka1.models.Showing
+import com.example.appka1.models.User
 import com.example.appka1.network.WroCinemaApi
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,12 +25,13 @@ sealed interface SeatsResultsUiState {
 }
 
 class SeatsActivity : AppCompatActivity() {
-    private lateinit var sharedPreferences: SharedPreferences
     private var seatsApiState: SeatsResultsUiState = SeatsResultsUiState.Loading
     private var showingId: Long = -1L
     private var seatGridWidth: Int = 0
     private var seatGridHeight: Int = 0
     private val reservedSeats: MutableList<Seat> = mutableListOf()
+    private lateinit var user: User
+    private var showing: Showing? = null
 
     private fun updateGridLayout(seatGrid: GridLayout, rows: Int, columns: Int) {
         seatGrid.columnCount = columns
@@ -45,20 +49,26 @@ class SeatsActivity : AppCompatActivity() {
         if (showingId == -1L) {
             finish()
         }
+        val userJson = intent.getStringExtra("USER")
+        if (userJson != null) {
+            user = Gson().fromJson(userJson, User::class.java)
+            Log.d("SeatsActivity", "Odebrano użytkownika: $user")
+        } else {
+            Log.e("SeatsActivity", "Błąd: brak danych użytkownika")
+        }
         setContentView(R.layout.activity_seats)
         val seatGrid: GridLayout = findViewById(R.id.seat_grid)
         val confirmButton: Button = findViewById(R.id.confirm_button)
-        sharedPreferences = getSharedPreferences("Reservations", MODE_PRIVATE)
 
         lifecycleScope.launch(Dispatchers.Main) {
             try {
-                var showing = withContext(Dispatchers.IO) {
+                showing = withContext(Dispatchers.IO) {
                     WroCinemaApi.retrofitService.getShowing(id = showingId)
                 }
 
                 if (showing != null) {
-                    seatsApiState = SeatsResultsUiState.Success(showing)
-                    val numberOfSeats = showing.seats.size
+                    seatsApiState = SeatsResultsUiState.Success(showing!!)
+                    val numberOfSeats = showing!!.seats.size
                     val rows = 7
                     val columns = numberOfSeats / rows
                     updateGridLayout(
@@ -67,7 +77,7 @@ class SeatsActivity : AppCompatActivity() {
                         columns = columns
                     )
 
-                    var seatList: List<Seat> = showing.seats
+                    var seatList: List<Seat> = showing!!.seats
                     manageSeatButtons(seatGrid, seatList)
                 } else {
                     seatsApiState = SeatsResultsUiState.Error
@@ -82,9 +92,18 @@ class SeatsActivity : AppCompatActivity() {
             if (reservedSeats.isNotEmpty()) {
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        WroCinemaApi.retrofitService.updateShowing(id = showingId, reservedSeats = mapOf("seats" to reservedSeats))
+                        WroCinemaApi.retrofitService.updateShowing(id = showingId, reservedSeats = mapOf("seats" to reservedSeats), userId = user.id)
                         withContext(Dispatchers.Main) {
                             Toast.makeText(this@SeatsActivity, "Zarezerwowano ${reservedSeats.size} miejsc!", Toast.LENGTH_SHORT).show()
+
+                            val intent = Intent(this@SeatsActivity, ReservedSeatsActivity::class.java).apply {
+                                putExtra("USER", userJson)
+                                putExtra("RESERVED_SEATS", ArrayList(reservedSeats.map { it.seatNumber.toString() }))
+                                putExtra("SHOWING_TITLE", showing?.movie?.title)
+                                putExtra("SHOWING_START_TIME", showing?.startTime)
+                            }
+                            startActivity(intent)
+                            finish()
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -140,15 +159,3 @@ class SeatsActivity : AppCompatActivity() {
         }
     }
 }
-
-//            if (seatStatus.any { it }) {
-//                sharedPreferences.edit().apply {
-//                    seatStatus.forEachIndexed { i, isReserved -> putBoolean("seat_$i", isReserved) }
-//                    apply()
-//                }
-//                Toast.makeText(this, "Zarezerwowano ${seatStatus.count { it }} miejsc!", Toast.LENGTH_SHORT).show()
-//                startActivity(Intent(this, MyReservationActivity::class.java))
-//                finish()
-//            } else {
-//                Toast.makeText(this, "Wybierz przynajmniej jedno miejsce!", Toast.LENGTH_SHORT).show()
-//            }

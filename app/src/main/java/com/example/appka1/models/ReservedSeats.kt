@@ -3,9 +3,8 @@ package com.example.appka1.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Seat(
-    val id: Long,
+data class ReservedSeats(
+    val showing: Showing,
     val seatNumber: Int,
-    var available: Boolean,
-    var user: User? = null
+    val user: User
 )

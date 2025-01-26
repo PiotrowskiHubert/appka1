@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.appka1.R
 import com.example.appka1.models.User
 import com.example.appka1.network.WroCinemaApi
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,15 +23,11 @@ sealed interface LoginResultsUiState {
 }
 
 class LoginActivity : AppCompatActivity() {
-
     private var loginState: LoginResultsUiState = LoginResultsUiState.Loading
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        val intent = Intent(this, HomeActivity::class.java)
-
         val usernameEditText = findViewById<EditText>(R.id.usernameEditText)
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
         val loginButton = findViewById<Button>(R.id.loginButton)
@@ -48,6 +45,10 @@ class LoginActivity : AppCompatActivity() {
 
                     if (user != null) {
                         loginState = LoginResultsUiState.Success(user)
+                        val userJson = Gson().toJson(user)
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java).apply {
+                            putExtra("USER", userJson)
+                        }
                         Log.d("Login", "Zalogowano użytkownika: $user")
                         startActivity(intent)
                         finish()
@@ -56,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.e("Login", "Błąd logowania: użytkownik nie istnieje")
                     }
 
-                }catch (e: Exception) {
+                } catch (e: Exception) {
                     loginState = LoginResultsUiState.Error
                     Log.e("Login", "Błąd logowania: ${e.message}")
                 }

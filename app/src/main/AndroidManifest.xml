@@ -40,6 +40,8 @@
         <activity android:name=".activities.MyReservationActivity"/>
         <activity android:name=".activities.AboutActivity"/>
         <activity android:name=".activities.PromotionsActivity"/>
+        <activity android:name=".activities.ReservedSeatsActivity"/>
+        <activity android:name=".activities.MovieActivity"/>
     </application>
 
 </manifest>
