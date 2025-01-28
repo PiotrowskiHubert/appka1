@@ -5,10 +5,12 @@ import com.example.appka1.models.ReservedSeats
 import com.example.appka1.models.Seat
 import com.example.appka1.models.Showing
 import com.example.appka1.models.User
+import com.example.appka1.RegisterUserDTO
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -16,6 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -61,7 +64,10 @@ interface WroCinemaApiService {
     suspend fun findMovieByTitle(@Query("title") title: String): Movie
 
     @GET("/{id}/poster")
-    fun getMoviePoster(@Path("id") id: Long): Call<ResponseBody>
+    suspend fun getMoviePoster(@Path("id") id: Long): Call<ResponseBody>
+
+    @POST("/register")
+    suspend fun registerUser(@Body registerUser: RegisterUserDTO): User
 }
 
 object WroCinemaApi {

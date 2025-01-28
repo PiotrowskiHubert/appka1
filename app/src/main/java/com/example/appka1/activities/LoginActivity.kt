@@ -32,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
         val loginButton = findViewById<Button>(R.id.loginButton)
         val errorTextView = findViewById<TextView>(R.id.errorTextView)
+        val registerTextView = findViewById<TextView>(R.id.registerTextView)
 
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString()
@@ -62,6 +63,13 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("Login", "Błąd logowania: ${e.message}")
                 }
             }
+        }
+
+        registerTextView.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java).apply {
+
+            }
+            startActivity(intent)
         }
     }
 }

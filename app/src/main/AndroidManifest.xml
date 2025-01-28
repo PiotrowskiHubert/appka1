@@ -42,6 +42,7 @@
         <activity android:name=".activities.PromotionsActivity"/>
         <activity android:name=".activities.ReservedSeatsActivity"/>
         <activity android:name=".activities.MovieActivity"/>
+        <activity android:name=".activities.RegisterActivity"/>
     </application>
 
 </manifest>
