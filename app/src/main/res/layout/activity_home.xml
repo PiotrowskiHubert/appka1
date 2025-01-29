@@ -51,4 +51,12 @@
             android:text="Promocje"
             android:layout_marginTop="8dp" />
 
+        <Button
+            android:id="@+id/btnAdminPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Panel admina"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
+
 </LinearLayout>

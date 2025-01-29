@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/image1">
+
+    <Button
+        android:id="@+id/btnAddMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj film"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnDeleteMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Usuń film"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnAddScreeningRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj sale kinową"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnDeleteScreeningRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Usuń sale kinową"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnAddShowing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dodaj seans"
+        android:layout_marginTop="8dp" />
+
+    <Button
+        android:id="@+id/btnDeleteShowing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Usuń seans"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>

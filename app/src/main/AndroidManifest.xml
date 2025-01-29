@@ -43,6 +43,13 @@
         <activity android:name=".activities.ReservedSeatsActivity"/>
         <activity android:name=".activities.MovieActivity"/>
         <activity android:name=".activities.RegisterActivity"/>
+        <activity android:name=".activities.AdminPanelActivity"/>
+        <activity android:name=".activities.adminPanel.AddMovieActivity"/>
+        <activity android:name=".activities.adminPanel.DeleteMovieActivity"/>
+        <activity android:name=".activities.adminPanel.AddScreeningRoomActivity"/>
+        <activity android:name=".activities.adminPanel.DeleteScreeningRoomActivity"/>
+        <activity android:name=".activities.adminPanel.AddShowingActivity"/>
+        <activity android:name=".activities.adminPanel.DeleteShowingActivity"/>
     </application>
 
 </manifest>

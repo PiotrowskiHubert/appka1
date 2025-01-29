@@ -53,5 +53,14 @@ class HomeActivity : AppCompatActivity() {
         promotionsButton.setOnClickListener {
             startActivity(Intent(this, PromotionsActivity::class.java))
         }
+
+        val adminPanelButton: Button = findViewById(R.id.btnAdminPanel)
+        if (user.status == 0){
+            adminPanelButton.visibility = Button.VISIBLE
+        }
+        adminPanelButton.setOnClickListener {
+            startActivity(Intent(this, AdminPanelActivity::class.java))
+        }
+
     }
 }

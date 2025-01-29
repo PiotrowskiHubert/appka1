@@ -6,6 +6,7 @@ import com.example.appka1.models.Seat
 import com.example.appka1.models.Showing
 import com.example.appka1.models.User
 import com.example.appka1.RegisterUserDTO
+import com.example.appka1.models.ScreeningRoom
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -16,6 +17,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -68,6 +70,24 @@ interface WroCinemaApiService {
 
     @POST("/register")
     suspend fun registerUser(@Body registerUser: RegisterUserDTO): User
+
+    @POST("/TODO")
+    suspend fun addMovie(): Movie
+
+    @DELETE("/TODO")
+    suspend fun deleteMovie(): Movie
+
+    @POST("/TODO")
+    suspend fun addScreeningRoom(): ScreeningRoom
+
+    @DELETE("/TODO")
+    suspend fun deleteScreeningRoom(): ScreeningRoom
+
+    @POST("/TODO")
+    suspend fun addShowing(): Showing
+
+    @DELETE("/TODO")
+    suspend fun deleteShowing(): Showing
 }
 
 object WroCinemaApi {
