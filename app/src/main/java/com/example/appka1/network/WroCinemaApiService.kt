@@ -1,15 +1,18 @@
 package com.example.appka1.network
 
+import android.icu.text.CaseMap.Title
 import com.example.appka1.models.Movie
 import com.example.appka1.models.ReservedSeats
 import com.example.appka1.models.Seat
 import com.example.appka1.models.Showing
 import com.example.appka1.models.User
 import com.example.appka1.RegisterUserDTO
+import com.example.appka1.activities.MovieDTO
 import com.example.appka1.models.ScreeningRoom
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.ResponseBody
@@ -19,10 +22,13 @@ import retrofit2.Retrofit
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.time.LocalDate
 
 
 val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -45,6 +51,9 @@ private val retrofit = Retrofit.Builder()
 interface WroCinemaApiService {
     @GET("/login")
     suspend fun userLogin(@Query("email") email: String, @Query("password") password: String): User
+
+    @GET("/movies")
+    suspend fun getAllMovies(): List<MovieDTO>
 
     @GET("/showings")
     suspend fun getShowings(): List<Showing>
@@ -71,20 +80,32 @@ interface WroCinemaApiService {
     @POST("/register")
     suspend fun registerUser(@Body registerUser: RegisterUserDTO): User
 
-    @POST("/TODO")
-    suspend fun addMovie(): Movie
-
-    @DELETE("/TODO")
-    suspend fun deleteMovie(): Movie
+    @POST("/add-movie")
+    suspend fun addMovie(@Query("title") title: String, @Query("description") description: String)
 
     @POST("/TODO")
-    suspend fun addScreeningRoom(): ScreeningRoom
+    @Multipart
+    suspend fun addMovieWithPoster(@Part("poster") poster: MultipartBody.Part): String
 
-    @DELETE("/TODO")
-    suspend fun deleteScreeningRoom(): ScreeningRoom
+    @DELETE("/delete-movie")
+    suspend fun deleteMovie(@Query("id") id: Long): Void
 
-    @POST("/TODO")
-    suspend fun addShowing(): Showing
+    @POST("/add-screening-room")
+    suspend fun addScreeningRoom(@Query("name") name: String, @Query("numOfSeats") numOfSeats: Int): ScreeningRoom
+
+    @GET("/get-all-screening-rooms")
+    suspend fun getAllScreeningRooms(): List<ScreeningRoom>
+
+    @DELETE("/delete-screening-room-by-name")
+    suspend fun deleteScreeningRoom(@Query("name") name: String): Void
+
+    @POST("/add-showing")
+    suspend fun addShowing(
+        @Query("movieTitle") movieTitle: String,
+        @Query("screeningRoomName") screeningRoomName: String,
+        @Query("startTime") startTime: String,
+        @Query("date") date: LocalDate
+    ): Showing
 
     @DELETE("/TODO")
     suspend fun deleteShowing(): Showing

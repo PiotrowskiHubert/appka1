@@ -11,6 +11,7 @@
         android:label="WroCinema"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="false"
         android:theme="@style/Theme.Appka1">
 
         <activity android:name=".activities.SplashActivity"
