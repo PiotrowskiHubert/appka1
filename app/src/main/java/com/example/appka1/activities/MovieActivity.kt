@@ -76,23 +76,14 @@ class MovieActivity : AppCompatActivity(){
     private fun loadMoviePoster(movieId: Long, imageView: ImageView) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                val response = WroCinemaApi.retrofitService.getMoviePoster(movieId).execute()
+                val response = WroCinemaApi.retrofitService.getMoviePoster(movieId)
 
-                if (response.isSuccessful && response.body() != null) {
-                    val inputStream = response.body()!!.byteStream()
-                    val bitmap = android.graphics.BitmapFactory.decodeStream(inputStream)
+                val inputStream = response.byteStream()
+                val bitmap = android.graphics.BitmapFactory.decodeStream(inputStream)
 
-                    withContext(Dispatchers.Main) {
-                        if (!isFinishing && !isDestroyed) {
-                            imageView.setImageBitmap(bitmap)
-                        }
-                    }
-                } else {
-                    Log.e("MovieActivity", "Błąd pobierania obrazu: ${response.code()} ${response.message()}")
-                    withContext(Dispatchers.Main) {
-                        if (!isFinishing && !isDestroyed) {
-                            imageView.setImageResource(R.drawable.image1) // Set a placeholder image
-                        }
+                withContext(Dispatchers.Main) {
+                    if (!isFinishing && !isDestroyed) {
+                        imageView.setImageBitmap(bitmap)
                     }
                 }
             } catch (e: Exception) {

@@ -1,24 +1,22 @@
 package com.example.appka1.network
 
-import android.icu.text.CaseMap.Title
+import com.example.appka1.RegisterUserDTO
+import com.example.appka1.activities.MovieDTO
 import com.example.appka1.models.Movie
 import com.example.appka1.models.ReservedSeats
+import com.example.appka1.models.ScreeningRoom
 import com.example.appka1.models.Seat
 import com.example.appka1.models.Showing
 import com.example.appka1.models.User
-import com.example.appka1.RegisterUserDTO
-import com.example.appka1.activities.MovieDTO
-import com.example.appka1.models.ScreeningRoom
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -43,6 +41,7 @@ private const val BASE_URL =
     "http://10.0.2.2:8080/"
 
 private val retrofit = Retrofit.Builder()
+    .addConverterFactory(ScalarsConverterFactory.create())
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .client(client) // Dodajemy klienta z interceptorami
@@ -75,7 +74,7 @@ interface WroCinemaApiService {
     suspend fun findMovieByTitle(@Query("title") title: String): Movie
 
     @GET("/{id}/poster")
-    suspend fun getMoviePoster(@Path("id") id: Long): Call<ResponseBody>
+    suspend fun getMoviePoster(@Path("id") id: Long): ResponseBody
 
     @POST("/register")
     suspend fun registerUser(@Body registerUser: RegisterUserDTO): User
@@ -107,8 +106,8 @@ interface WroCinemaApiService {
         @Query("date") date: LocalDate
     ): Showing
 
-    @DELETE("/TODO")
-    suspend fun deleteShowing(): Showing
+    @DELETE("/delete-showing-by-id")
+    suspend fun deleteShowing(showingId: Long): Void
 }
 
 object WroCinemaApi {
